@@ -432,7 +432,8 @@
 
     <script>
         // Configuration
-        const API_URL = 'https://script.google.com/macros/s/AKfycbx4L0OroyOlJKTNL2idCfGis9iQMMt4Mn7wJKJZc3nDwJOV6xOsre8vJO7va73caSJt/exec';        
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzBoDEsw6KzI3sTp1oJVufx_gqfGFTphwiJBeJLdzhRDhiPwzs4rNbNtgY6epa5yX6t/exec';
+        
         // Global state
         let currentBusinessId = null;
         let currentUserEmail = null;
@@ -470,9 +471,14 @@
         // API functions
         async function apiCall(action, data) {
             try {
-              const response = await fetch(API_URL + '?action=' + action + '&data=' + encodeURIComponent(JSON.stringify(data)), {
-    method: 'GET'
-              });
+                const params = new URLSearchParams({
+                    action: action,
+                    data: JSON.stringify(data)
+                });
+                
+                const response = await fetch(API_URL + '?' + params.toString(), {
+                    method: 'GET'
+                });
 
                 const result = await response.json();
                 return result;
